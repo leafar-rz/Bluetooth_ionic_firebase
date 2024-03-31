@@ -1,0 +1,69 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Bascule</ion-title>
+  </ion-toolbar>
+</ion-header>
+ -->
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <ion-label id="label">Metales</ion-label>
+        </ion-item>
+        <ion-list slot="content">
+          <ion-radio-group (ionChange)="select_metal($event)">
+            <ion-item>
+              <ion-radio value="1">Oro 10k Méxicano</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="2">Oro 14k Méxicano</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="3">Oro 10k Italiano</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="4">Oro 14k Italiano</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="5">Plata .925</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-list>
+
+  <div id="metalHeader">
+    <p id="pHeader">{{metal}}</p>
+  </div>
+
+  <br>
+
+  <div id="div_bascule">
+    <p id="pBascule">{{receivedData}} G</p>
+  </div>
+
+  <div id="divBtn">
+    <ion-button id="go_cart" shape="round" style="width: 45%;" (click)="enviarAlCarrito()">ENVIAR AL CARRITO</ion-button>
+    <ion-button id="go_cart" shape="round" style="width: 45%;" [routerLink]="['/header/cart']">IR AL CARRITO</ion-button>
+  </div>
+
+  <br><br><br><br>
+</ion-content>
+
+  <!-- <div *ngIf="!isConnected">
+    <div id="divCentral">
+      <p id="pOpciones">SELECCIONA ALGUN DISPOSITIVO</p>
+  </div>
+
+    <ion-list *ngIf="listToggle && pairedList && pairedList.length > 0">
+      <ion-item *ngFor="let device of pairedList; let i = index" (click)="selectDevice(i)">
+        {{ device.name }} - {{ device.address }}
+      </ion-item>
+    </ion-list>
+  </div> -->
+  
+  <!-- <ion-button id="imprimir" (click)="imprimirWifi()" shape="round">Imprimir WIFI</ion-button>
+
+  <ion-button id="imprimir" (click)="connect('EB:11:06:28:9D:65')" shape="round">IMPRESORA</ion-button> -->

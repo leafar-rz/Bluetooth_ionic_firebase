@@ -1,0 +1,112 @@
+<ion-app>
+  <ion-menu side="start" menuId="custom-menu" contentId="main-content" persistent>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon name="menu-outline"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="home-outline" slot="start"></ion-icon>
+            <ion-label>Inicio</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>Perfil</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="settings-outline" slot="start"></ion-icon>
+            <ion-label>Configuración</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item (click)="showDevices($event)">
+            <ion-icon name="hardware-chip-outline" slot="start"></ion-icon>
+            <ion-label>Dispositivos</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        
+        <ion-list *ngIf="showDeviceList && pairedList && pairedList.length > 0">
+          <ion-item *ngFor="let device of pairedList; let i = index" (click)="selectDevice(i)">
+            <ion-label>
+              <h2>{{ device.name }}</h2>
+              <p>{{ device.address }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button menu="custom-menu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>BASCULE</ion-title>
+      <ion-buttons slot="end">
+        <ion-button *ngIf="connectedDeviceAddress === '00:23:05:00:3B:F3'">
+          <ion-icon name="bluetooth"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="connectedDeviceAddress === '86:67:7A:14:44:46'">
+          <ion-icon name="print"></ion-icon>
+        </ion-button>
+        <ion-button (click)="deviceDisconnect()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          <!-- <span>{{ isConnected ? 'Desconectar' : 'Conectar' }}</span> -->
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+  </ion-header>
+
+  <ion-content id="main-content" fullscreen><br><br>
+   
+
+    <ion-router-outlet></ion-router-outlet>
+
+    
+  </ion-content>
+
+  <ion-footer class="mi-footer">
+
+    <div id="divEstiloFooter">
+      <table align="center" id="tablaFooter">
+        <tr>
+  
+          <th align="center">
+            <ion-img src="assets/img/userNegro.png" id="imgFooter" [routerLink]="['/']"></ion-img>
+          </th>
+          <th align="center">
+            <ion-img src="assets/img/casa.png" id="imgFooter" [routerLink]="['/']"></ion-img>
+          </th>
+          <th align="center">
+            <ion-img src="assets/img/pieza_unitaria.png" id="imgFooter" [routerLink]="['/header/stock-list']"></ion-img>
+          </th>
+          <th align="center">
+            <ion-img src="assets/img/cart.png" id="imgFooter" [routerLink]="['/header/cart']"></ion-img>
+          </th>
+        </tr>
+      </table>
+    </div>
+  
+  </ion-footer>
+
+  
+</ion-app>
+

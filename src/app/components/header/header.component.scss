@@ -1,0 +1,52 @@
+// Header
+ion-header {
+  background-color: rgb(246, 246, 246);
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  height: 50px;
+}
+
+ion-title {
+  text-align: center;
+}
+
+ion-toolbar {
+  --background: transparent;
+  --border-style: none;
+}
+
+ion-button {
+  color: black;
+}
+
+ion-button ion-icon {
+  color: black;
+}
+
+// Footer
+.mi-footer {
+  background-size: cover;
+  background-position: center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(246, 246, 246);
+  height: 60px;
+}
+
+#divEstiloFooter {
+  background-color: rgb(246, 246, 246);
+  height: 60px;
+}
+
+#tablaFooter {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#imgFooter {
+  width: 35px;
+}
+ 

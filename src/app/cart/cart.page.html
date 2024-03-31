@@ -1,0 +1,135 @@
+<ion-content [fullscreen]="true">
+
+
+  <div *ngIf="clientes_list" id="div_clients">
+    <ion-list>
+      <ion-item *ngFor="let cliente of clientes | async">
+        <ion-label>
+          <h2>{{ cliente.nombre }}</h2>
+          <p>{{ cliente.domicilio }}</p>
+          <p>{{ cliente.telefono }}</p>
+        </ion-label>
+        <ion-button (click)="seleccionarCliente(cliente)" id="btb_selected">Seleccionar</ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button id="btb_add_client">A G R E G A R</ion-button>
+
+  </div>
+
+  <div class="centered-div">
+    <ion-img src="assets/img/from-date.png" id="from-to-date-img" (click)="from_date_method()"></ion-img>
+    <ion-img src="assets/img/to-date.png" id="from-to-date-img" (click)="to_date_method()"></ion-img>
+  </div>
+
+  <div style="margin-left: 10px;">
+    <p>Fecha pedido: {{fromDate}}</p>
+    <p>Fecha entrega: {{toDate}}</p>
+    <div style="display: flex;margin-top: -15px;margin-left: -10px;">
+      <ion-buttons slot="end">
+        <ion-button (click)="show_clients()">
+          <ion-img src="assets/img/userNegro.png" id="imgClients"></ion-img>
+        </ion-button>
+      </ion-buttons>
+      <p>{{cliente_seleccionado_nombre}}</p>
+    </div>
+  </div>
+
+  <div style="margin-top: -5px;">
+  <!-- desde -->
+  <ion-item *ngIf="from_date">
+    <ion-datetime id="ion-datetime_from" presentation="date" (ionChange)="onDateChangeFromDate($event)"
+      [highlightedDates]="highlightedDates" [(ngModel)]="selectedDate">
+    </ion-datetime>
+  </ion-item>
+
+  <!-- hasta -->
+  <ion-item *ngIf="to_date">
+    <ion-datetime id="ion-datetime_to" presentation="date" (ionChange)="onDateChangeToDate($event)"
+      [highlightedDates]="highlightedDates2" [(ngModel)]="selectedDate">
+    </ion-datetime>
+  </ion-item>
+  </div>
+
+
+
+  <div class="table-container producto-table-container">
+    <table class="stock-table">
+
+      <tr>
+        <td id="cabecera_table">
+          <ion-img src="assets/img/escoba_roja.png" id="imgClients2" (click)="clearStorage()"></ion-img>
+        </td>
+
+        <td id="cabecera_table">
+          <p>PRODUCTO</p>
+        </td>
+        <td id="cabecera_table">
+          <p>SUBTOTAL</p>
+        </td>
+      </tr>
+
+      <tr *ngFor="let producto of carrito; let i = index">
+
+        <td>
+          <div style="display: flex;">
+            <ion-img src="assets/img/remove.png" id="imgFooter" (click)="removeFromCart(i)"></ion-img>
+            <ion-input style="width: 25px;" type="number" [(ngModel)]="producto.cantidad_comprar"
+              (ngModelChange)="validateCantidad(i)" min="1"></ion-input>
+          </div>
+        </td>
+
+        <td>
+          <p>{{ producto.descripcion }} <b>${{ producto.precio}}</b></p>
+        </td>
+
+        <td style="text-align: center;">
+          <p>${{ producto.precio * producto.cantidad_comprar}}</p>
+        </td>
+
+      </tr>
+
+      <tr *ngFor="let producto2 of metal_carrito; let i = index">
+
+        <td>
+          <div style="display: flex;">
+            <ion-img src="assets/img/remove.png" id="imgFooter" (click)="removeFromCart2(i)"></ion-img>
+            <ion-input style="width: 40px;" type="number" [(ngModel)]="producto2.cantidad_comprar"
+              (ngModelChange)="validateCantidad(i)"></ion-input>
+          </div>
+        </td>
+
+        <td>
+          <p>{{ producto2.descripcion }} <b>${{ producto2.precio}}</b></p>
+        </td>
+
+        <td style="text-align: center;">
+          <p>${{ producto2.precio * producto2.cantidad_comprar}}</p>
+        </td>
+
+      </tr>
+
+      <tr>
+        <th colspan="3">TOTAL: ${{ getTotal() }}</th>
+      </tr>
+
+    </table>
+  </div>
+
+  <div class="centered-div">
+    <ion-img src="assets/img/printer.png" id="ticket_send" (click)="send_printer()"></ion-img>
+    <ion-img src="assets/img/whatsapp.png" id="ticket_send" (click)="send_whatsapp()"></ion-img>
+  </div>
+  <br><br><br><br>
+</ion-content>
+
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cart</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="show_clients()">
+        <ion-img src="assets/img/userNegro.png" id="imgClients"></ion-img>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->

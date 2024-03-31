@@ -1,0 +1,92 @@
+<ion-content [fullscreen]="true">
+  <div class="options-grid">
+    <h3>Elija una de las siguientes opciones</h3>
+
+    <ion-row>
+      <ion-col>
+        <div class="option-item">
+          <p>Oro 10k<br>Mexicano</p>
+          <img src="assets/img/bandera_mexico.png" alt="Oro 10k Mexicano"
+            [routerLink]="['/header/bascule', { metalId: 1 }]">
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="option-item">
+          <p>Oro 10k<br>Italiano</p>
+          <img src="assets/img/bandera_italia.png" alt="Oro 10k Italiano"
+            [routerLink]="['/header/bascule', { metalId: 3 }]">
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="option-item">
+          <p>Oro 14k<br>Mexicano</p>
+          <img src="assets/img/bandera_mexico.png" alt="Oro 14k Mexicano"
+            [routerLink]="['/header/bascule', { metalId: 2}]">
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="option-item">
+          <p>Oro 14k<br>Italiano</p>
+          <img src="assets/img/bandera_italia.png" alt="Oro 14k Italiano"
+            [routerLink]="['/header/bascule', { metalId: 4}]">
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="option-item">
+          <p>Plata<br>.925</p>
+          <img src="assets/img/plata_925.png" alt="Plata 925" [routerLink]="['/header/bascule', { metalId: 5 }]">
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="option-item">
+          <p>Pieza<br>Unitaria</p>
+          <img src="assets/img/pieza_unitaria.png" alt="Pza unitaria" [routerLink]="['/header/stock-list']">
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <br><br><br><br>
+
+</ion-content>
+
+
+
+
+<!-- <ion-footer class="mi-footer">
+
+  <div id="divEstiloFooter">
+    <table align="center" id="tablaFooter">
+      <tr>
+
+        <th align="center">
+          <ion-img src="assets/img/userNegro.png" id="imgFooter" [routerLink]="['/']"></ion-img>
+        </th>
+        <th align="center">
+          <ion-img src="assets/img/casa.png" id="imgFooter" [routerLink]="['/']"></ion-img>
+        </th>
+        <th align="center">
+          <ion-img src="assets/img/info.png" id="imgFooter" [routerLink]="['/']"></ion-img>
+        </th>
+        <th align="center">
+          <ion-img src="assets/img/cart.png" id="imgFooter" [routerLink]="['/header/cart']"></ion-img>
+        </th>
+      </tr>
+    </table>
+  </div>
+
+</ion-footer> -->
+
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Homepage - Grid </ion-title>
+  </ion-toolbar>
+</ion-header>
+ -->

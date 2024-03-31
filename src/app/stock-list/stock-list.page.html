@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+
+  <div class="category-buttons">
+    <ion-button id="btn_category" (click)="onCategoriaSeleccionada(6)" fill="clear" >TODOS</ion-button>
+    
+    <ion-button id="btn_category" *ngFor="let categoria of categorias | async"  (click)="onCategoriaSeleccionada(categoria.id)" fill="clear" >
+      {{ categoria.descripcion }}
+    </ion-button>
+  </div>
+
+  <div class="table-container">
+    <table class="stock-table">
+      <tr>
+        <td id="cabecera_table" colspan="2">
+          <p>PRODUCTO</p>
+        </td>
+        <td id="cabecera_table">
+          <p>AGREGAR</p>
+        </td>
+      </tr>
+      <tr *ngFor="let producto of productos | async">
+        <td>
+          <ion-img [src]="producto.img" style="width: 90px;"></ion-img>
+        </td>
+        <td>
+          <p>{{ producto.descripcion }} <b>${{ producto.precio }}</b></p>
+        </td>
+        <td style="text-align: center;display: flex; align-items: center;">
+            <ion-input id="input_add" type="number" placeholder="000" [(ngModel)]="input_add"
+            (ngModelChange)="checkInput()"></ion-input>
+          <ion-button (click)="addToCart(producto)" id="btn_add" shape="round" [disabled]="!enableButton">+</ion-button>
+        </td>
+      </tr>
+    </table>
+
+    <div style="text-align: center;margin: 0 auto">
+      <ion-button [routerLink]="['/header/cart']" id="go_cart" shape="round" style="width: 60%;">IR AL CARRITO</ion-button>
+    </div>
+
+  </div>
+
+  <br><br><br><br><br><br>
+</ion-content>

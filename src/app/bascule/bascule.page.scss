@@ -1,0 +1,96 @@
+
+ion-radio::part(container) {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+ion-radio::part(mark) {
+  background: none;
+  transition: none;
+  transform: none;
+  border-radius: 0;
+}
+
+ion-radio.radio-checked::part(container) {
+  background: #6815ec;
+  border-color: transparent;
+}
+
+ion-radio.radio-checked::part(mark) {
+  width: 6px;
+  height: 10px;
+
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #fff;
+
+  transform: rotate(45deg);
+}
+
+ion-radio{
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#label{
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+#pHeader{
+  font-size: 25px;font-family: Arial, Helvetica, sans-serif
+}
+
+#metalHeader{
+  text-align: center;
+  width: 100%;
+  margin-bottom: -20px;
+  margin-top: 60px;
+}
+
+
+#div_bascule
+{
+  border: 20px solid rgb(36, 204, 255); 
+  border-radius: 50%; 
+  width: 200px; 
+  height: 200px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+  margin: 0 auto;
+}
+
+#pBascule{
+  margin: 0; 
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+
+#go_cart {
+  height: 5px;
+  color: black;
+  margin-left: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+
+  --background: rgb(163, 234, 255);
+  --background-hover: rgb(0, 68, 255);
+  --background-activated: rgb(0, 0, 255);
+  --background-focused: rgb(0, 110, 255);
+
+}
+
+#divBtn{
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 15px;
+}
