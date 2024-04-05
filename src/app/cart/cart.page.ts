@@ -7,6 +7,12 @@ import { AlertController, ToastController } from '@ionic/angular';
 
 import { HeaderComponent } from '../components/header/header.component';
 
+import { Router } from '@angular/router';
+
+import { getFirestore, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
+
+import { IonInput } from '@ionic/angular';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
@@ -18,34 +24,37 @@ export class CartPage implements OnInit {
   highlightedDates2: any[] = [];
   selectedDate: string;
   fromDate: any;
-  toDate: any;
+  toDate: any = null;
   from_date = false;
   to_date = false;
   clientes_list = false;
   clientes: Observable<any[]>;
   cliente_seleccionado: any;
-  cliente_seleccionado_nombre: any= "Seleccionar cliente";
+  cliente_seleccionado_nombre: any = "Seleccionar cliente";
   total_pagar: any;
 
-  metal_carrito: any[] = []; 
+  metal_carrito: any[] = [];
 
-  constructor(public headerComponent: HeaderComponent,private toastCtrl: ToastController, private alertCtrl: AlertController, private firestore: AngularFirestore, private bluetoothSerial: BluetoothSerial) {
-    this.selectedDate = new Date().toISOString(); 
+  showPopup = false;
+  showPopup2 = false;
+
+  abono = 0;
+
+  constructor(public headerComponent: HeaderComponent, private toastCtrl: ToastController, private alertCtrl: AlertController, private firestore: AngularFirestore, private bluetoothSerial: BluetoothSerial, private router: Router) {
+    this.selectedDate = new Date().toISOString();
     this.fromDate = this.selectedDate.split('T')[0];
-    this.clientes = new Observable<any[]>(); 
+    this.clientes = new Observable<any[]>();
   }
 
   ngOnInit() {
     this.carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     this.metal_carrito = JSON.parse(localStorage.getItem('metal_articulo') || '[]');
-    console.log(this.metal_carrito);
     this.clientes = this.firestore.collection('CLIENTES').valueChanges();
   }
 
   ionViewWillEnter() {
     this.carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     this.metal_carrito = JSON.parse(localStorage.getItem('metal_articulo') || '[]');
-    console.log(this.metal_carrito);
     this.clientes = this.firestore.collection('CLIENTES').valueChanges();
     this.headerComponent.connect('86:67:7A:14:44:46');
   }
@@ -77,8 +86,6 @@ export class CartPage implements OnInit {
       textColor: 'var(--ion-color-secondary-contrast)',
       backgroundColor: 'var(--ion-color-secondary)',
     }];
-    alert("Fecha agregada");
-
     this.selectedDate = new Date().toISOString();
     this.to_date = false;
   }
@@ -107,9 +114,6 @@ export class CartPage implements OnInit {
     this.clientes_list = false;
     this.cliente_seleccionado = cliente;
     this.cliente_seleccionado_nombre = cliente.nombre;
-    console.log(this.cliente_seleccionado_nombre);
-
-    console.log("Cliente seleccionado:", this.cliente_seleccionado);
   }
 
   show_clients() {
@@ -214,15 +218,217 @@ export class CartPage implements OnInit {
   async showToast(message: string) {
     let toast = await this.toastCtrl.create({
       message: message,
-      duration: 5000
+      duration: 2000
     });
     await toast.present();
   }
 
-  clearStorage(){
-    localStorage.clear();
-    window.location.reload(); // Recarga la página actual
+  async hidePopup2() {
+    this.showPopup2 = !this.showPopup2;
   }
 
+
+  async hidePopup() {
+    if (this.showPopup == false) {
+      await this.capturaSale();
+      this.showPopup = true;
+    } else {
+      this.showPopup = false;
+    }
+
+
+  }
+
+  async capturaSale() {
+    try {
+      const db = getFirestore();
+  
+      await this.incrementarContadorVentas();
+  
+      const contadorSnap = await getDoc(doc(db, 'CONTADOR-VENTAS', '1'));
+      if (contadorSnap.exists()) {
+        const contadorData = contadorSnap.data();
+        const contador = contadorData['contador'];
+  
+        const venta = {
+          cliente_id: this.cliente_seleccionado.id,
+          cliente_nombre: this.cliente_seleccionado.nombre,
+          cliente_telefono: this.cliente_seleccionado.telefono,
+          estatus: 'PAGADO',
+          fecha: this.fromDate,
+          fecha_limite: this.toDate,
+          id: contador,
+          pago: 'EFECTIVO',
+          saldo_pendiente: 0,
+          total: this.getTotal()
+        };
+  
+        await setDoc(doc(db, 'VENTAS', contador.toString()), venta);
+  
+        await this.showToast('Venta exitosa');
+      } else {
+        console.error('El documento "CONTADOR-VENTAS/1" no existe');
+      }
+    } catch (error) {
+      console.error('Error al agregar venta:', error);
+    }
+  }
+
+  async capturaSaleAbono() {
+    try {
+      const db = getFirestore();
+      await this.incrementarContadorVentas();
+      const contadorSnap = await getDoc(doc(db, 'CONTADOR-VENTAS', '1'));
+      let saldoPendiente = 0;
+      if (contadorSnap.exists()) {
+        const contadorData = contadorSnap.data();
+        const contador = contadorData['contador'];
+        saldoPendiente = this.getTotal() - this.abono;
+        const clienteDocRef = doc(db, 'CLIENTES', this.cliente_seleccionado.id.toString());
+        const venta = {
+          cliente_id: this.cliente_seleccionado.id,
+          cliente_nombre: this.cliente_seleccionado.nombre,
+          cliente_telefono: this.cliente_seleccionado.telefono,
+          estatus: 'PENDIENTE',
+          fecha: this.fromDate,
+          fecha_limite: this.toDate,
+          id: contador,
+          pago: 'EFECTIVO',
+          saldo_pendiente: saldoPendiente,
+          total: this.getTotal()
+        };
+        await setDoc(doc(db, 'VENTAS', contador.toString()), venta);
+        await updateDoc(clienteDocRef, {
+          saldo: increment(saldoPendiente)
+        });
+        await this.showToast('Abono exitoso');
+        this.clearStorage();
+        this.router.navigateByUrl('/');
+      } else {
+        console.error('El documento "CONTADOR-VENTAS/1" no existe');
+      }
+    } catch (error) {
+      console.error('Error al agregar venta:', error);
+    }
+  }
+
+  /* async capturaSale() {
+    try {
+      await this.incrementarContadorVentas();
+
+      const contadorSnap = await this.firestore.doc<any>('CONTADOR-VENTAS/1').get().toPromise();
+
+      if (contadorSnap && contadorSnap.exists) { // Verifica si contadorSnap no es undefined y si el documento existe
+        const contador = contadorSnap.data().contador;
+
+        const venta = {
+          cliente_id: this.cliente_seleccionado.id,
+          cliente_nombre: this.cliente_seleccionado.nombre,
+          estatus: "PAGADO",
+          fecha: this.fromDate,
+          fecha_limite: this.toDate,
+          id: contador,
+          pago: "EFECTIVO",
+          saldo_pendiente: 0,
+          total: this.getTotal()
+        };
+
+        await this.firestore.collection('VENTAS').doc(contador.toString()).set(venta);
+
+        this.showToast('Venta exitosa');
+
+
+      } else {
+        console.error('El documento "CONTADOR-VENTAS/1" no existe');
+      }
+    } catch (error) {
+      console.error('Error al agregar venta:', error);
+    }
+  } */
+
+ /*  async capturaSaleAbono2() {
+    try {
+      await this.incrementarContadorVentas();
+  
+      const contadorSnap = await this.firestore.doc<any>('CONTADOR-VENTAS/1').get().toPromise();
+      let saldoPendiente = 0;
+  
+      if (contadorSnap && contadorSnap.exists) {
+        const contador = contadorSnap.data().contador;
+  
+        saldoPendiente = this.getTotal() - this.abono;
+  
+        const clienteDocRef = this.firestore.doc('CLIENTES/' + this.cliente_seleccionado.id);
+  
+        const venta = {
+          cliente_id: this.cliente_seleccionado.id,
+          cliente_nombre: this.cliente_seleccionado.nombre,
+          estatus: "PENDIENTE",
+          fecha: this.fromDate,
+          fecha_limite: this.toDate,
+          id: contador,
+          pago: "EFECTIVO",
+          saldo_pendiente: saldoPendiente,
+          total: this.getTotal()
+        };
+  
+        await this.firestore.collection('VENTAS').doc(contador.toString()).set(venta);
+  
+        await clienteDocRef.update({
+          saldo: firebase.firestore.FieldValue.increment(saldoPendiente)
+        });
+
+        this.showToast('Abono exitoso');
+        this.clearStorage();
+        this.router.navigateByUrl('/');
+      } else {
+        console.error('El documento "CONTADOR-VENTAS/1" no existe');
+      }
+    } catch (error) {
+      console.error('Error al agregar venta:', error);
+    }
+  } */
+  
+  
+
+  clearStorage() {
+    localStorage.clear();
+    this.carrito = [];
+    this.highlightedDates = [1];
+    this.highlightedDates2 = [];
+    this.selectedDate = new Date().toISOString();
+    this.fromDate = this.selectedDate.split('T')[0];
+    this.toDate = null;
+    this.from_date = false;
+    this.to_date = false;
+    this.clientes_list = false;
+    this.clientes = new Observable<any[]>();
+    this.cliente_seleccionado = null;
+    this.cliente_seleccionado_nombre = "Seleccionar cliente";
+    this.total_pagar = null;
+    this.metal_carrito = [];
+    this.showPopup = false;
+    this.showPopup2 = false;
+    this.abono = 0;
+
+    this.showPopup = false;
+
+  }
+
+
+  async incrementarContadorVentas() {
+    try {
+      const db = getFirestore();
+      const contadorVentasRef = doc(db, 'CONTADOR-VENTAS', '1');
+
+      await updateDoc(contadorVentasRef, {
+        contador: increment(1)
+      });
+
+    } catch (error) {
+      alert('Error al incrementar contador de ventas:'+ error);
+    }
+  }
+  
 
 }

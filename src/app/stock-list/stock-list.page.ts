@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 //import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-stock-list',
@@ -13,8 +14,9 @@ export class StockListPage implements OnInit {
   enableButton: boolean = true;
   productos: Observable<any[]>;
   categorias: Observable<any[]>;
+  code_product:any="";
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor(private toastCtrl: ToastController, private alertCtrl: AlertController,private firestore: AngularFirestore) { 
     this.productos = new Observable<any[]>(); // inicializando en el constructor
     this.categorias = new Observable<any[]>(); // inicializando en el constructor
   }
@@ -51,6 +53,28 @@ export class StockListPage implements OnInit {
  
   }
 
+  search(){
+    if (this.code_product.length > 0) {
+      this.productos = this.firestore.collection('ARTICULOS', ref => ref.where('codigo', '==', this.code_product)).valueChanges();
+      this.productos.subscribe(products => {
+        if (products.length === 0) {
+          this.showError("Producto no encontrado");
+          this.code_product="";
+        }
+      });
+    } else {
+      this.showError("Debes agregar un codigo para poder buscar");
+    }
+  }
+
+  async showError(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: '¡Error!',
+      message: message,
+      buttons: ['Ok']
+    });
+    await alert.present();
+  }
 
   
 }

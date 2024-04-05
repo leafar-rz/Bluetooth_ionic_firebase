@@ -52,6 +52,21 @@
 
   }
 
+  #btn_pay {
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 8px;
+  }
+
+  #table_pay{
+    background-color: rgb(199, 199, 199);
+    margin-top: 10px;
+    width: 80%;
+    height: 90px;
+    border-color: white;
+  }
+
   .centered-div {
     display: flex;
     justify-content: center;
@@ -62,6 +77,13 @@
     width: 20%;
     margin: 20px;
   }
+
+  #ticket_send2 {
+    width: 70px;
+    margin: 20px;
+  }
+
+  
 
   #from-to-date-img {
     width: 150px;
@@ -99,20 +121,27 @@
 }
 
 #div_clients {
-    text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 20px;
-    padding: 20px;
-    width: 80%;
-    max-width: 400px;
-    height: 450px; /* Altura fija */
-    overflow-y: auto; /* Habilitar desplazamiento vertical */
-    z-index: 9999; /* Agrega un z-index alto */
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: 80%;
+  max-width: 400px;
+  height: 450px; /* Altura fija para orientación vertical */
+  overflow-y: auto; /* Habilitar desplazamiento vertical */
+  z-index: 9999; /* Agrega un z-index alto */
+}
+
+/* Media query para orientación horizontal */
+@media screen and (orientation: landscape) {
+  #div_clients {
+    height: 250px; /* Altura fija para orientación horizontal */
+  }
 }
 
 
@@ -130,4 +159,46 @@
     width: 100%;
     font-size: 10px;
     font-weight: bold;
+  }
+
+  #imgPay {
+    width: 150px;
+  }
+   
+  #div_pay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(240, 240, 240);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    height:62%;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: -10px;
+  }
+
+  #btn_add {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    
+    color: black;
+    
+    font-size: 10px;
+    font-weight: bold;
+    
+  
+    --background: rgb(255, 146, 146);
+    --background-hover: rgb(255, 80, 80);
+    --background-activated: rgb(255, 0, 0);
+    --background-focused:rgb(255, 87, 87);
+
   }

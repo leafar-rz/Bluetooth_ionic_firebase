@@ -8,6 +8,20 @@
     </ion-button>
   </div>
 
+  <div style="display: flex;">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          label="Buscar por codigo: "
+          id="input_code" 
+          type="text" 
+          [(ngModel)]="code_product"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button label="Codigo del producto" (click)="search()" id="btn_code" shape="round">Buscar</ion-button>
+  </div>
+
   <div class="table-container">
     <table class="stock-table">
       <tr>

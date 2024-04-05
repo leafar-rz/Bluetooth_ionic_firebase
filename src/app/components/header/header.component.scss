@@ -1,5 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 // Header
 ion-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   background-color: rgb(246, 246, 246);
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -21,6 +32,11 @@ ion-button {
 
 ion-button ion-icon {
   color: black;
+}
+
+// Content
+:host ::ng-deep ion-content {
+  --padding-top: 55px; /* Ajusta el valor según la altura del header */
 }
 
 // Footer
@@ -49,4 +65,3 @@ ion-button ion-icon {
 #imgFooter {
   width: 35px;
 }
- 

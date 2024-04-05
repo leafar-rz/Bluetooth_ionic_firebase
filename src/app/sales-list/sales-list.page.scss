@@ -1,0 +1,108 @@
+.category-buttons{
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    margin-top: 5px;
+    justify-content: center;
+  }
+  
+  #btn_category{
+    color: black;
+    background-color:  rgb(0, 195, 255);
+    border-radius: 20px;
+    border: solid;
+    border-color: rgb(0, 195, 255);
+    font-size: 15px;
+  }
+
+  #input_code {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(65,128,255); /* Estilo por defecto */
+    box-sizing: border-box;
+    font-size: 15px;
+    width: 240px;
+    height: 20px;
+    margin-top: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+
+  #btn_code {
+    margin-left: -10px;
+    height: 5px;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 25px;
+  
+      --background: rgb(255, 146, 146);
+      --background-hover: rgb(255, 80, 80);
+      --background-activated: rgb(255, 0, 0);
+      --background-focused:rgb(255, 87, 87);
+  
+  }
+
+  .stock-table {
+    width: 100%;
+  }
+  
+  .stock-table td,
+  .stock-table th {
+    padding: 8px;
+  }
+  
+  .stock-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  #cabecera_table {
+    text-align: center;
+    background-color: rgb(199, 199, 199);
+    font-weight: bold;
+  }
+
+  .table-container {
+    //overflow-x: auto;
+    margin-top: 5px;
+  }
+  
+  .stock-table {
+    width: 100%;
+    min-width: 300px;
+    /* Establece un ancho mínimo para evitar que la tabla se colapse demasiado */
+  }
+
+  #div_abonar {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    z-index: 9999; /* Agrega un z-index alto */
+  }
+
+  #btb_abonar{
+    margin-top: 10px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  #input_abono {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 44, 44); /* Estilo por defecto */
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin-top: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  }

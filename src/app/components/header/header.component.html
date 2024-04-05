@@ -16,8 +16,20 @@
       <ion-list>
         <ion-menu-toggle>
           <ion-item>
-            <ion-icon name="home-outline" slot="start"></ion-icon>
-            <ion-label>Inicio</ion-label>
+            <ion-icon name="home-outline" slot="start" [routerLink]="['/']"></ion-icon>
+            <ion-label [routerLink]="['/']">Inicio</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="home-outline" slot="start" [routerLink]="['/header/customers']"></ion-icon>
+            <ion-label [routerLink]="['/header/customers']">Clientes</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item>
+            <ion-icon name="home-outline" slot="start" [routerLink]="['/header/sales-list']"></ion-icon>
+            <ion-label [routerLink]="['/header/sales-list']">Ventas</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
@@ -75,8 +87,7 @@
 
   </ion-header>
 
-  <ion-content id="main-content" fullscreen><br><br>
-   
+  <ion-content id="main-content" fullscreen>
 
     <ion-router-outlet></ion-router-outlet>
 
