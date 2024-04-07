@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" ion-fixed>
 
 
   <div *ngIf="clientes_list" id="div_clients">
@@ -95,7 +95,7 @@
           <div style="display: flex;">
             <ion-img src="assets/img/remove.png" id="imgFooter" (click)="removeFromCart2(i)"></ion-img>
             <ion-input style="width: 40px;" type="number" [(ngModel)]="producto2.cantidad_comprar"
-              (ngModelChange)="validateCantidad(i)"></ion-input>
+              (ngModelChange)="validateCantidad(i)" inputmode="numeric"></ion-input>
           </div>
         </td>
 
@@ -116,11 +116,84 @@
     </table>
   </div>
 
-  <div class="centered-div">
-    <ion-img src="assets/img/printer.png" id="ticket_send" (click)="send_printer()"></ion-img>
-    <ion-img src="assets/img/whatsapp.png" id="ticket_send" (click)="send_whatsapp()"></ion-img>
+  <table align="center" border="1px solid white" id="table_pay">
+    <tr>
+      <th>
+        <ion-button [disabled]="!cliente_seleccionado || !toDate" id="btn_pay" (click)="hidePopup()" fill="clear">PAGAR</ion-button>
+      </th>
+      <th>
+        <ion-button [disabled]="!cliente_seleccionado || !toDate" id="btn_pay" (click)="hidePopup2()" fill="clear">APARTAR</ion-button>
+      </th>
+    </tr>
+  </table>
+  
+  <div id="div_pay" *ngIf="showPopup">
+    <!-- <ion-button id="btn_add" (click)="hidePopup()">X</ion-button> -->
+    <p style="font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;margin-top: 10px;">Pago completado</p>
+    <table align="center">
+      <tr>
+        <th>
+
+          <ion-img src="assets/img/check_mark.png" id="imgPay"></ion-img>
+        </th>
+      </tr>
+    </table>
+    <table align="center" border="1px solid white" id="table_pay">
+      <tr>
+        <th style="width: 100px;">
+          <p>Total</p>
+          <p>${{ getTotal() }}</p>
+        </th>
+        <th style="width: 100px;">
+          <p>Pendiente</p>
+          <p>$0</p>
+        </th>
+      </tr>
+    </table>
+    <div class="centered-div">
+      <ion-img src="assets/img/printer.png" id="ticket_send2" (click)="send_printer()"></ion-img>
+      <ion-img src="assets/img/whatsapp.png" id="ticket_send2" (click)="send_whatsapp()"></ion-img>
+    </div>
+    <div style="text-align: center;margin: 0 auto;margin-bottom: 10px;margin-top: -5px;">
+      <ion-button id="go_cart" shape="round" style="width: 200px;" (click)="clearStorage()" [routerLink]="['/']">NUEVA VENTA</ion-button>
+    </div>
+    <br>
   </div>
-  <br><br><br><br>
+
+
+  <div id="div_pay" *ngIf="showPopup2">
+    <!-- <ion-button id="btn_add" (click)="hidePopup2()">X</ion-button> -->
+    <p style="font-size: 20px;font-weight: bold;font-family: Arial, Helvetica, sans-serif;margin-top: 10px;">Proceso Apartado</p>
+    <table align="center">
+      <tr>
+        <th>
+
+          <ion-img src="assets/img/check_mark.png" id="imgPay"></ion-img>
+        </th>
+      </tr>
+    </table>
+    <table align="center" border="1px solid white" id="table_pay">
+      <tr>
+        <th style="width: 100px;">
+          <p>Total</p>
+          <p>${{ getTotal() }}</p>
+        </th>
+        <th style="width: 100px;">
+          <p>Abono</p>
+          <ion-input style="width: 100px;margin-top: -17px;" type="number" [(ngModel)]="abono" scrollAssist="false" scrollAssist="false" inputmode="numeric"></ion-input>
+        </th>
+      </tr>
+    </table>
+    <div class="centered-div">
+      <ion-img src="assets/img/printer.png" id="ticket_send2" (click)="send_printer()"></ion-img>
+      <ion-img src="assets/img/whatsapp.png" id="ticket_send2" (click)="send_whatsapp()"></ion-img>
+    </div>
+    <div style="text-align: center;margin: 0 auto;margin-bottom: 10px;margin-top: -5px;">
+      <ion-button id="go_cart" shape="round" style="width: 200px;" (click)="capturaSaleAbono()">ABONAR</ion-button>
+    </div>
+    <br>
+  </div>
+<br><br><br>
 </ion-content>
 
 <!-- <ion-header [translucent]="true">

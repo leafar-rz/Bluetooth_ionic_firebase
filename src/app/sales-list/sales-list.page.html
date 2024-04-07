@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="category-buttons">
+    <ion-button id="btn_category" (click)="estatusSeleccionado('TODOS')" fill="clear">TODOS</ion-button>
+
+    <ion-button id="btn_category" (click)="estatusSeleccionado('PAGADO')" fill="clear">PAGADOS</ion-button>
+
+    <ion-button id="btn_category" (click)="estatusSeleccionado('PENDIENTE')" fill="clear">PENDIENTES</ion-button>
+
+
+  </div>
+
+  <div style="display: flex;">
+    <ion-list>
+      <ion-item>
+        <ion-input label="Buscar por telefono: " id="input_code" type="number"
+          [(ngModel)]="telefono_cliente"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button label="Telefono del cliente" (click)="search()" id="btn_code" shape="round">Buscar</ion-button>
+  </div>
+
+  <div class="table-container">
+    <table class="stock-table">
+      <tr>
+        <td id="cabecera_table">
+          <p>FECHA</p>
+        </td>
+        <td id="cabecera_table">
+          <p>PAGO</p>
+        </td>
+        <td id="cabecera_table">
+          <p>BALANCE</p>
+        </td>
+        <td id="cabecera_table">
+          <p>ABONAR</p>
+        </td>
+      </tr>
+      <tr *ngFor="let venta of ventas | async">
+        <td style="text-align: center;">
+          <p><b>{{ venta.cliente_nombre }}</b> {{ venta.fecha }} </p>
+        </td>
+        <td style="text-align: center;">
+          <p><b>{{ venta.pago }}</b> </p>
+        </td>
+        <td style="text-align: center;">
+          <p [style.color]="venta.saldo_pendiente > 0 ? 'red' : 'black'"
+            [style.font-size.px]="venta.saldo_pendiente > 0 ? 13 : null">
+            {{ venta.saldo_pendiente > 0 ? 'Pendiente: $' + venta.saldo_pendiente + ' Total: $' + venta.total : '$' +
+            venta.total }}
+          </p>
+        </td>
+
+        <td style="display: flex; justify-content: center;">
+          <ion-img src="assets/img/pagar.png" style="width: 50px;" (click)="mostrarDivAbonar(venta)"></ion-img>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="div_abonar" *ngIf="popUp">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="close-circle-outline" style="position: absolute; top: 0; right: 0; color: red;"
+          (click)="showPopUp()"></ion-icon>
+        <ion-label>
+          <h2><b>Total ${{ venta_abonar.total }}</b></h2>
+          <p>Pendiente ${{ venta_abonar.saldo_pendiente }}</p>
+          <ion-input label="Abono " id="input_abono" type="number" [(ngModel)]="cantidad_abonar"></ion-input>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button id="btb_abonar" (click)="abonar()">ABONAR</ion-button>
+
+  </div>
+
+</ion-content>

@@ -44,6 +44,15 @@ const routes: Routes = [
             redirectTo: 'stock-list',
             pathMatch: 'full'
           },
+          {
+            path: 'sales-list',
+            loadChildren: () => import('./sales-list/sales-list.module').then( m => m.SalesListPageModule)
+          },
+          {
+            path: 'sales-list',
+            redirectTo: 'sales-list',
+            pathMatch: 'full'
+          },
         ],
       },
       {
@@ -51,6 +60,7 @@ const routes: Routes = [
         redirectTo: 'header/home',
         pathMatch: 'full'
       },
+  
  /*  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),

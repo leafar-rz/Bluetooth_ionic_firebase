@@ -47,6 +47,43 @@
   margin-top: 15px;
 }
 
+#input_code {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(65,128,255); /* Estilo por defecto */
+  box-sizing: border-box;
+  font-size: 15px;
+  width: 240px;
+  height: 20px;
+  margin-top: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+#input_code:focus {
+  border-color: blue; /* Estilo cuando está enfocado */
+  outline: none; /* Eliminar borde al enfocar */
+}
+
+#input_code:active {
+  border-color:green; 
+}
+
+
+#btn_code {
+  margin-left: -10px;
+  height: 5px;
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 25px;
+
+    --background: rgb(255, 146, 146);
+    --background-hover: rgb(255, 80, 80);
+    --background-activated: rgb(255, 0, 0);
+    --background-focused:rgb(255, 87, 87);
+
+}
+
 #btn_add {
   height: 5px;
   color: black;
